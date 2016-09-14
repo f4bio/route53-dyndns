@@ -1,9 +1,9 @@
 #!/bin/bash
 # Script retrieves the current IP Address from a standard German Telecom Router and
 # uses this to update an Amazon AWS Route 53 zone
-CURL="/usr/bin/curl -ks"
+CURL="$(which curl) -ks"
 TMPFILE=/tmp/`date +%Y%m%d_%H%M%S`.awsdns
-AWSBIN="/usr/local/bin/aws"
+AWSBIN="$(which aws)"
 regexARecord="^[A-Za-z][A-Za-z0-9]{1,62}\.([A-Za-z0-9]{1,63}\.)?[A-Za-z0-9]{1,63}$"
 regexZoneID="^Z[A-Z0-9]{13}$"
 

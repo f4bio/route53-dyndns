@@ -7,5 +7,26 @@ This little script was born out of a desire to get rid of DynDNS and similar ser
 
 This script requires a fully configured installation [AWS cli](http://aws.amazon.com/cli/) which is used to do the update.
 
-crontab:
-`*/15 * * * * /path/to/script/route53-dyndns/update-zone.sh <ZONE_ID> <DOMAIN> >> /path/to/script/route53-dyndns/update-zone.log`
+#### aws-cli:
+```
+AWS Access Key ID [None]: XXX
+AWS Secret Access Key [None]: YYY+ZZZ
+Default region name [None]: eu-central-1
+Default output format [None]: json
+```
+
+#### bin:
+`ln -s ./route53-update.sh /usr/local/bin/route53-update`
+
+#### config:
+`ln -s ./route53-dyndns.conf /usr/local/etc/route53-dyndns.conf`
+
+#### systemd:
+```
+# ln -s ./route53-dyndns@.service /usr/lib/systemd/system/route53-dyndns@.service
+# systemctl daemon-reload
+# systemctl enable route53-dyndns@<DOMAIN>.service
+```
+
+#### crontab:
+`*/15 * * * * route53-update <ZONE_ID> <DOMAIN>`
