@@ -9,17 +9,18 @@ This script requires a fully configured installation [AWS cli](http://aws.amazon
 
 #### aws-cli:
 ```
-AWS Access Key ID [None]: XXX
-AWS Secret Access Key [None]: YYY+ZZZ
-Default region name [None]: eu-central-1
-Default output format [None]: json
+$ aws-cli --configure
+ > AWS Access Key ID [None]: XXX
+ > AWS Secret Access Key [None]: YYY+ZZZ
+ > Default region name [None]: eu-central-1
+ > Default output format [None]: json
 ```
 
 #### bin:
-`ln -s ./route53-update.sh /usr/local/bin/route53-update`
+`# ln -s ./route53-update.sh /usr/local/bin/route53-update`
 
 #### config:
-`ln -s ./route53-dyndns.conf /usr/local/etc/route53-dyndns.conf`
+`# ln -s ./route53-dyndns.conf /usr/local/etc/route53-dyndns.conf`
 
 #### systemd:
 ```
