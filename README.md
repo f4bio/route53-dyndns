@@ -17,16 +17,17 @@ $ aws-cli --configure
 ```
 
 #### bin:
-`# ln -s ./route53-update.sh /usr/local/bin/route53-update`
+`# cp $(pwd)/route53-update.sh /usr/local/bin/route53-update`
 
 #### config:
-`# ln -s ./route53-dyndns.conf /usr/local/etc/route53-dyndns.conf`
+`# cp ./route53-dyndns.conf /usr/local/etc/route53-dyndns-<CONF_NAME>.conf`
 
 #### systemd:
 ```
-# ln -s ./route53-dyndns@.service /usr/lib/systemd/system/route53-dyndns@.service
+# cp $(pwd)/route53-dyndns@.service /usr/lib/systemd/system/route53-dyndns@.service
+# cp $(pwd)/route53-dyndns.timer /usr/lib/systemd/system/route53-dyndns.timer
 # systemctl daemon-reload
-# systemctl enable route53-dyndns@<DOMAIN>.service
+# systemctl enable route53-dyndns@<CONF_NAME>.service
 ```
 
 #### crontab:

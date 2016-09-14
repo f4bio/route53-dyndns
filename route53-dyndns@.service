@@ -2,6 +2,6 @@
 Description=Check for new IP and update route53 zone accordingly
 
 [Service]
-EnvironmentFile=/usr/local/etc/route53-dyndns.conf
-ExecStart=/usr/local/bin/route53-update $ZONE %i
+EnvironmentFile=/usr/local/etc/route53-dyndns-%i.conf
+ExecStart=/usr/local/bin/route53-update $ZONE $DOMAIN
 User=nobody
