@@ -1,0 +1,9 @@
+[Unit]
+Description=Check for new IP and update route53 zone accordingly
+
+[Timer]
+OnBootSec=15min
+OnUnitActiveSec=1w
+
+[Install]
+WantedBy=timers.target
