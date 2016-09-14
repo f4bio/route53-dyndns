@@ -11,7 +11,7 @@ regexZoneID="^Z[A-Z0-9]{13}$"
 
 #checks
 if [ "$#" -ne 2 ]; then
-	echo "usage: updateAws.sh <ZONEID> <ARECORD>"
+	echo "usage: $ route53-update <ZONE_ID> <ARECORD>"
 	exit 1
 fi
 if [[ ! "$1" =~ $regexZoneID ]]; then

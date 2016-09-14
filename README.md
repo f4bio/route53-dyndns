@@ -7,17 +7,22 @@ This little script was born out of a desire to get rid of DynDNS and similar ser
 
 This script requires a fully configured installation [AWS cli](http://aws.amazon.com/cli/) which is used to do the update.
 
+## requirements
+* `aws-cli`
+* `curl`
+* `dig`
+
 #### aws-cli:
 ```
-$ aws-cli --configure
- > AWS Access Key ID [None]: XXX
- > AWS Secret Access Key [None]: YYY+ZZZ
- > Default region name [None]: eu-central-1
- > Default output format [None]: json
+$ aws-cli configure
+  > AWS Access Key ID [None]: XXX
+  > AWS Secret Access Key [None]: YYY+ZZZ
+  > Default region name [None]: eu-central-1
+  > Default output format [None]: json
 ```
 
 #### bin:
-`# ln -s $(pwd)/route53-update.sh /usr/local/bin/route53-update`
+`# cp ./route53-update.sh /usr/local/bin/route53-update`
 
 #### config:
 `# cp ./route53-dyndns.conf /usr/local/etc/route53-dyndns-<CONF_NAME>.conf`
@@ -25,7 +30,7 @@ $ aws-cli --configure
 #### systemd:
 ```
 # ln -s $(pwd)/route53-dyndns@.service /usr/lib/systemd/system/route53-dyndns@.service
-# ln -s $(pwd)/route53-dyndns.timer /usr/lib/systemd/system/route53-dyndns.timer
+# ln -s $(pwd)/route53-dyndns@.timer /usr/lib/systemd/system/route53-dyndns@.timer
 # systemctl daemon-reload
 # systemctl enable route53-dyndns@<CONF_NAME>.service
 ```
