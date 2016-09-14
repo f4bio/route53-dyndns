@@ -1,10 +1,10 @@
 #!/bin/bash
 # Script retrieves the current IP Address from a standard German Telecom Router and
-# uses this to update an Amazon AWS Route 53 zone${stringZ//abc/xyz}
+# uses this to update an Amazon AWS Route 53 zone
 CURL="$(which curl) -ks"
-TMPFILE=/tmp/`date +%Y%m%d_%H%M%S`.awsdns
+TMPFILE=/tmp/`date +%Y%m%d_%H%M%S`.route53
 AWSBIN="$(which aws)"
-regexARecord="^[A-Za-z][A-Za-z0-9]{1,62}#([A-Za-z0-9]{1,63}#)?[A-Za-z0-9]{1,63}$"
+regexARecord="^[A-Za-z][A-Za-z0-9]{1,62}\.([A-Za-z0-9]{1,63}\.)?[A-Za-z0-9]{1,63}$"
 regexZoneID="^Z[A-Z0-9]{13}$"
 
 # TODO: --quiet option
@@ -19,7 +19,7 @@ if [[ ! "$1" =~ $regexZoneID ]]; then
 	exit 2
 fi
 if [[ ! "$2" =~ $regexARecord ]]; then
-	echo "invald A-Record. i.e: \"sub_main_domain\""
+	echo "invald A-Record. i.e: \"sub.main.domain\""
 	exit 2
 fi
 
