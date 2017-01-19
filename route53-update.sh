@@ -37,7 +37,8 @@ DNS=8.8.8.8
 IP=$(${CURL} $URL | grep -Eo '([0-9]{1,3}\.){3}[0-9]{1,3}')
 
 # FIND CURRENTLY REGISTERED IP
-REMOTEIP=`dig +short $DYNHOST @$DNS`
+# REMOTEIP=`dig +short $DYNHOST @$DNS`
+REMOTEIP=`drill $DYNHOST @$DNS | grep "^$DYNHOST" | cut -f 5`
 
 if [ "$REMOTEIP" == "$IP" -o "$REMOTEIP" == "" ]; then
    echo "$IP still current" > /dev/null

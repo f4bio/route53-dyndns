@@ -10,11 +10,11 @@ This script requires a fully configured installation [AWS cli](http://aws.amazon
 ## requirements
 * `aws-cli`
 * `curl`
-* `dig`
+* `drill` (`ldns`)
 
 #### aws-cli:
 ```
-$ aws-cli configure
+$ aws configure
   > AWS Access Key ID [None]: XXX
   > AWS Secret Access Key [None]: YYY+ZZZ
   > Default region name [None]: eu-central-1
@@ -25,15 +25,13 @@ $ aws-cli configure
 `# cp ./route53-update.sh /usr/local/bin/route53-update`
 
 #### config:
-`# cp ./route53-dyndns.conf /usr/local/etc/route53-dyndns-<CONF_NAME>.conf`
+* `# cp ./route53-dyndns.conf /usr/local/etc/route53-dyndns-<CONF_NAME>.conf`
+* and edit
 
 #### systemd:
 ```
-# ln -s $(pwd)/route53-dyndns@.service /usr/lib/systemd/system/route53-dyndns@.service
-# ln -s $(pwd)/route53-dyndns@.timer /usr/lib/systemd/system/route53-dyndns@.timer
+# ln -s $(pwd)/route53-dyndns@.service /etc/systemd/system/route53-dyndns@.service
+# ln -s $(pwd)/route53-dyndns@.timer /etc/systemd/system/route53-dyndns@.timer
 # systemctl daemon-reload
 # systemctl enable route53-dyndns@<CONF_NAME>.service
 ```
-
-#### crontab:
-`*/15 * * * * route53-update <ZONE_ID> <DOMAIN>`
