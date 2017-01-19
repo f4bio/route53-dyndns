@@ -22,16 +22,17 @@ $ aws configure
 ```
 
 #### bin:
-`# cp ./route53-update.sh /usr/local/bin/route53-update`
+`# ln -s $(pwd)/route53-update.sh /usr/local/bin/route53-update`
 
 #### config:
-* `# cp ./route53-dyndns.conf /usr/local/etc/route53-dyndns-<CONF_NAME>.conf`
+* `# cp $(pwd)/route53-dyndns.conf /usr/local/etc/route53-dyndns-<CONF_NAME>.conf`
 * and edit
 
 #### systemd:
 ```
-# ln -s $(pwd)/route53-dyndns@.service /etc/systemd/system/route53-dyndns@.service
-# ln -s $(pwd)/route53-dyndns@.timer /etc/systemd/system/route53-dyndns@.timer
+# cp $(pwd)/route53-dyndns@.service /etc/systemd/system/route53-dyndns@.service
+# cp $(pwd)/route53-dyndns@.timer /etc/systemd/system/route53-dyndns@.timer
 # systemctl daemon-reload
-# systemctl enable route53-dyndns@<CONF_NAME>.service
+# systemctl enable route53-dyndns@<CONF_NAME>.timer
+# systemctl restart route53-dyndns@<CONF_NAME>.timer
 ```
