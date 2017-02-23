@@ -2,7 +2,7 @@
 # Script retrieves the current IP Address from a standard German Telecom Router and
 # uses this to update an Amazon AWS Route 53 zone
 CURL="$(which curl) -ks"
-TMPFILE=/tmp/`date +%Y%m%d_%H%M%S`.route53
+TMPFILE="$(mktemp).route53"
 AWSBIN="$(which aws)"
 regexARecord="^[A-Za-z][A-Za-z0-9]{1,62}\.([A-Za-z0-9]{1,63}\.)?[A-Za-z0-9]{1,63}$"
 regexZoneID="^Z[A-Z0-9]{13}$"
@@ -34,13 +34,16 @@ DYNHOST="$2"
 DNS=8.8.8.8
 
 # GET IP FROM ROUTER
-IP=$(${CURL} $URL | grep -Eo '([0-9]{1,3}\.){3}[0-9]{1,3}')
+# IP=$(${CURL} $URL | grep -Eo '([0-9]{1,3}\.){3}[0-9]{1,3}')
+IP=$(${CURL} $URL | grep "var wan_ip" | grep -Eo '([0-9]{1,3}\.){3}[0-9]{1,3}')
 
 # FIND CURRENTLY REGISTERED IP
 # REMOTEIP=`dig +short $DYNHOST @$DNS`
-REMOTEIP=`drill $DYNHOST @$DNS | grep "^$DYNHOST" | cut -f 5`
+# REMOTEIP=`drill $DYNHOST @$DNS | grep "^$DYNHOST" | cut -f 5`
+REMOTEIP=`dig +short $DYNHOST @$DNS`
 
-if [ "$REMOTEIP" == "$IP" -o "$REMOTEIP" == "" ]; then
+if [ "$REMOTEIP" == "$IP" -o "$REMOTEIP" == "" ]
+then
    echo "$IP still current" > /dev/null
 else
    echo "we need to update"
