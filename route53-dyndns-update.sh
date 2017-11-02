@@ -35,7 +35,7 @@ DNS=8.8.8.8
 
 # GET IP FROM ROUTER
 # IP=$(${CURL} $URL | grep -Eo '([0-9]{1,3}\.){3}[0-9]{1,3}')
-IP=$(${CURL} $URL | grep "var wan_ip" | grep -Eo '([0-9]{1,3}\.){3}[0-9]{1,3}')
+IP=$(${CURL} $URL)
 
 # FIND CURRENTLY REGISTERED IP
 # REMOTEIP=`dig +short $DYNHOST @$DNS`
