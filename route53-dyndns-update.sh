@@ -19,7 +19,7 @@ if [[ ! "$1" =~ $regexZoneID ]]; then
 	exit 2
 fi
 if [[ ! "$2" =~ $regexARecord ]]; then
-	echo "invald A-Record. i.e: \"sub.main.domain\""
+	echo "invald A-Record. i.e: \"sub.main.tld\""
 	exit 2
 fi
 
@@ -35,6 +35,10 @@ DNS=8.8.8.8
 
 # GET IP FROM ROUTER
 # IP=$(${CURL} $URL | grep -Eo '([0-9]{1,3}\.){3}[0-9]{1,3}')
+<<<<<<< HEAD:route53-dyndns-update.sh
+=======
+#IP=$(${CURL} $URL | grep "var wan_ip" | grep -Eo '([0-9]{1,3}\.){3}[0-9]{1,3}')
+>>>>>>> 7e9021e8b87a017b5bb0ad16f95992629903367a:route53-update.sh
 IP=$(${CURL} $URL)
 
 # FIND CURRENTLY REGISTERED IP

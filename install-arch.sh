@@ -8,11 +8,11 @@ confDir="/usr/local/etc" # ${4:${ROUTE53_DYNDNS_CONF_DIR:-"/usr/local/bin"}}
 hostnameFormatted=${hostname//./_}
 
 # for prod:
-# cd $sourceDir
-# sudo -H git clone https://github.com:f4bio/route53-dyndns
+cd $sourceDir
+sudo -H git clone https://github.com:f4bio/route53-dyndns
 
 # for dev:
-sudo cp -r ../route53-dyndns $sourceDir/ || { echo -e "\nmaybe need sudo?" ; exit 1; }
+# sudo cp -r ../route53-dyndns $sourceDir/ || { echo -e "\nmaybe need sudo?" ; exit 1; }
 
 sudo cp --force $sourceDir/route53-dyndns/route53-dyndns-update.sh $binDir/route53-dyndns-update
 sudo cp --force $sourceDir/route53-dyndns/route53-dyndns.conf $confDir/route53-dyndns-$hostnameFormatted.conf
