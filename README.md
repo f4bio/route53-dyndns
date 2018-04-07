@@ -32,9 +32,9 @@ $ aws configure
 
 #### systemd:
 ```
-# cp $(pwd)/route53-dyndns@.service /etc/systemd/system/route53-dyndns@.service
-# cp $(pwd)/route53-dyndns@.timer /etc/systemd/system/route53-dyndns@.timer
-# systemctl daemon-reload
+$ cp $(pwd)/route53-dyndns@.service $HOME/.config/systemd/user/route53-dyndns@.service
+$ cp $(pwd)/route53-dyndns@.timer $HOME/.config/systemd/user/route53-dyndns@.timer
+$ systemctl --user daemon-reload
 $ systemctl --user enable route53-dyndns@<CONF_NAME>.timer
 $ systemctl --user restart route53-dyndns@<CONF_NAME>.timer
 ```

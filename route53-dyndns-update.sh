@@ -44,8 +44,8 @@ IP6=$(${CURL} -6 $URL)
 # FIND CURRENTLY REGISTERED IP
 # REMOTEIP=`dig +short $DYNHOST @$DNS`
 # REMOTEIP=`drill $DYNHOST @$DNS | grep "^$DYNHOST" | cut -f 5`
-REMOTEIP4=`dig +short $DYNHOST @$DNS4`
-REMOTEIP6=`dig +short $DYNHOST @$DNS6`
+REMOTEIP4=`dig A +short $DYNHOST @$DNS4`
+REMOTEIP6=`dig AAAA +short $DYNHOST @$DNS6`
 
 ## check and ipdate ipv4
 if [ "$REMOTEIP4" == "$IP4" -o "$REMOTEIP4" == "" ]
@@ -56,7 +56,7 @@ else
    #CREATE AWS UPDATE RECORD
    cat <<UPDATE-JSON > $TMPFILE4
    {
-     "Comment": "dyndns",
+     "Comment": "automatic route53-dyndns A update",
      "Changes": [
        {
          "Action": "UPSERT",
@@ -89,7 +89,7 @@ else
    #CREATE AWS UPDATE RECORD
    cat <<UPDATE-JSON > $TMPFILE6
    {
-     "Comment": "dyndns",
+     "Comment": "automatic route53-dyndns AAAA update",
      "Changes": [
        {
          "Action": "UPSERT",
