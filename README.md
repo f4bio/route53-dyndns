@@ -1,4 +1,4 @@
-DynDNS replacement via AWS route 53
+DynDNS via AWS route 53
 ====
 
 Based on: https://github.com/th0mi/ddns/blob/master/updateAws.sh - THX!
@@ -21,8 +21,9 @@ $ aws configure
   > Default output format [None]: json
 ```
 
+## setup
 #### bin:
-`# ln -s $(pwd)/route53-update.sh /usr/local/bin/route53-update`
+`# ln -s $(pwd)/route53-dyndns-update.sh /usr/local/bin/route53-dyndns-update`
 
 #### config:
 * `# cp $(pwd)/route53-dyndns.conf /usr/local/etc/route53-dyndns-<CONF_NAME>.conf`
