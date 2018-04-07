@@ -52,7 +52,7 @@ if [ "$REMOTEIP4" == "$IP4" -o "$REMOTEIP4" == "" ]
 then
    echo "$IP4 still current" > /dev/null
 else
-   echo "we need to update"
+   echo "IPv4 needs an update"
    #CREATE AWS UPDATE RECORD
    cat <<UPDATE-JSON > $TMPFILE4
    {
@@ -85,7 +85,7 @@ if [ "$REMOTEIP6" == "$IP6" -o "$REMOTEIP6" == "" ]
 then
    echo "$IP6 still current" > /dev/null
 else
-   echo "we need to update"
+   echo "IPv6 needs an update"
    #CREATE AWS UPDATE RECORD
    cat <<UPDATE-JSON > $TMPFILE6
    {

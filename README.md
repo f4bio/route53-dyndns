@@ -10,7 +10,8 @@ This script requires a fully configured installation [AWS cli](http://aws.amazon
 ## requirements
 * `aws-cli`
 * `curl`
-* `drill` (`ldns`)
+* `drill` (`ldnsutils`)
+* `dig` (`dnsutils`)
 
 #### aws-cli:
 ```
@@ -34,6 +35,6 @@ $ aws configure
 # cp $(pwd)/route53-dyndns@.service /etc/systemd/system/route53-dyndns@.service
 # cp $(pwd)/route53-dyndns@.timer /etc/systemd/system/route53-dyndns@.timer
 # systemctl daemon-reload
-# systemctl enable route53-dyndns@<CONF_NAME>.timer
-# systemctl restart route53-dyndns@<CONF_NAME>.timer
+$ systemctl --user enable route53-dyndns@<CONF_NAME>.timer
+$ systemctl --user restart route53-dyndns@<CONF_NAME>.timer
 ```
