@@ -6,5 +6,11 @@ RUN apk upgrade
 RUN apk add python py-pip curl python py-pip drill
 
 RUN pip install awscli
+RUN apk -v --purge del py-pip
+RUN rm /var/cache/apk/*
+# RUN rc-service crond start && rc-update add crond
 
-ENTRYPOINT ["/usr/bin/bash"]
+COPY route53-dyndns-update.sh /etc/periodic/15min/route53-dyndns-update.sh
+
+# ENTRYPOINT ["/bin/sh"]
+CMD ["crond", "-l 2", "-f"]

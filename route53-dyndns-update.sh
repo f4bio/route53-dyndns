@@ -8,28 +8,22 @@ AWSBIN="$(which aws)"
 regexDomainRecord="^[A-Za-z][A-Za-z0-9]{1,62}\.([A-Za-z0-9]{1,63}\.)?[A-Za-z0-9]{1,63}$"
 regexZoneID="^Z[A-Z0-9]{13}$"
 
-# TODO: --quiet option
-
 #checks
-if [ "$#" -ne 2 ]; then
-	echo "usage: $ route53-dyndns-update <ZONE_ID> <DOMAIN_RECORD>"
-	exit 1
+if [[ ! "${AWS_ZONE_ID}" =~ $regexZoneID ]]; then
+  echo "invald Zone ID (${AWS_ZONE_ID}). ex.: \"ZABCDEF1G2H3\""
+  exit 2
 fi
-if [[ ! "$1" =~ $regexZoneID ]]; then
-	echo "invald Zone ID. ex.: \"ZABCDEF1G2H3\""
-	exit 2
-fi
-if [[ ! "$2" =~ $regexDomainRecord ]]; then
-	echo "invald Domain Record ex.: \"sub.main.tld\""
-	exit 2
+if [[ ! "${AWS_DOMAIN_RECORD}" =~ $regexDomainRecord ]]; then
+  echo "invald Domain Record (${AWS_DOMAIN_RECORD}) ex.: \"sub.main.tld\""
+  exit 2
 fi
 
 #URL to the router page containing the current IP
 URL="https://wtfismyip.com/text"
 # Amazon AWS hosted zone ID
-ZONEID="$1"
+ZONEID="${AWS_ZONE_ID}"
 # A record for your dyndns name
-DYNHOST="$2"
+DYNHOST="${AWS_DOMAIN_RECORD}"
 
 # a public name server to check what the currently registered IP is
 DNS4=1.1.1.1
@@ -50,11 +44,11 @@ REMOTEIP6=`dig AAAA +short $DYNHOST @$DNS6`
 ## check and ipdate ipv4
 if [ "$REMOTEIP4" == "$IP4" -o "$REMOTEIP4" == "" ]
 then
-   echo "$IP4 still current" > /dev/null
+  echo "$IP4 still current" > /dev/null
 else
-   echo "IPv4 needs an update"
-   #CREATE AWS UPDATE RECORD
-   cat <<UPDATE-JSON > $TMPFILE4
+  echo "IPv4 needs an update"
+  #CREATE AWS UPDATE RECORD
+  cat <<UPDATE-JSON > $TMPFILE4
    {
      "Comment": "automatic route53-dyndns A update",
      "Changes": [
@@ -74,20 +68,19 @@ else
      ]
    }
 UPDATE-JSON
-   echo "Updating IPv4 to $IP4"
-   # do the update via AWS cli
-   ${AWSBIN} route53 change-resource-record-sets --hosted-zone-id $ZONEID --change-batch file://$TMPFILE4
-   rm $TMPFILE4
+  echo "Updating IPv4 to $IP4"
+  # do the update via AWS cli
+  ${AWSBIN} route53 change-resource-record-sets --hosted-zone-id $ZONEID --change-batch file://$TMPFILE4
+  rm $TMPFILE4
 fi
 
 # check and update ipv6
-if [ "$REMOTEIP6" == "$IP6" -o "$REMOTEIP6" == "" ]
-then
-   echo "$IP6 still current" > /dev/null
+if [ "$REMOTEIP6" == "$IP6" -o "$REMOTEIP6" == "" ]; then
+  echo "$IP6 still current" > /dev/null
 else
-   echo "IPv6 needs an update"
-   #CREATE AWS UPDATE RECORD
-   cat <<UPDATE-JSON > $TMPFILE6
+  echo "IPv6 needs an update"
+  #CREATE AWS UPDATE RECORD
+  cat <<UPDATE-JSON > $TMPFILE6
    {
      "Comment": "automatic route53-dyndns AAAA update",
      "Changes": [
@@ -107,8 +100,8 @@ else
      ]
    }
 UPDATE-JSON
-   echo "Updating IPv6 to $IP6"
-   # do the update via AWS cli
-   ${AWSBIN} route53 change-resource-record-sets --hosted-zone-id $ZONEID --change-batch file://$TMPFILE6
-   rm $TMPFILE6
+  echo "Updating IPv6 to $IP6"
+  # do the update via AWS cli
+  ${AWSBIN} route53 change-resource-record-sets --hosted-zone-id $ZONEID --change-batch file://$TMPFILE6
+  rm $TMPFILE6
 fi

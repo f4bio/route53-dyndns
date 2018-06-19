@@ -1,0 +1,20 @@
+version: "2"
+
+services:
+  tasker:
+    image: strm/tasker
+      volumes:
+        - "/var/run/docker.sock:/var/run/docker.sock"
+      environment:
+        - ZONE=ZABCDEF1G2H3
+        - DOMAIN=sub.main.tld
+        configuration: |
+          schedule:
+            - every: minute
+            - task: hello
+          tasks:
+            docker:
+              - name: hello
+              - image: debian:jessie
+              - script:
+                - echo Hello world from Tasker

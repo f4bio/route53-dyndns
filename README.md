@@ -1,6 +1,9 @@
 DynDNS via AWS route 53
 ====
 
+switching to containerized solution using [tasker](https://github.com/opsxcq/tasker)
+
+
 Based on: https://github.com/th0mi/ddns/blob/master/updateAws.sh - THX!
 
 This little script was born out of a desire to get rid of DynDNS and similar services. There are several scripts around that do the job, but most of them are pretty complicated because they try to do the Amazon AWS calls manually.
