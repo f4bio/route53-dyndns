@@ -10,11 +10,11 @@ regexZoneID="^Z[A-Z0-9]{13}$"
 
 #checks
 if [[ ! "${AWS_ZONE_ID}" =~ $regexZoneID ]]; then
-  echo "invald Zone ID (${AWS_ZONE_ID}). ex.: \"ZABCDEF1G2H3\""
+  echo "invald Zone ID - got: \"${AWS_ZONE_ID}\" need: \"ZABCDEF1G2H3RN\""
   exit 2
 fi
 if [[ ! "${AWS_DOMAIN_RECORD}" =~ $regexDomainRecord ]]; then
-  echo "invald Domain Record (${AWS_DOMAIN_RECORD}) ex.: \"sub.main.tld\""
+  echo "invald Domain Record - got: \"${AWS_DOMAIN_RECORD}\" need: \"sub.main.tld\""
   exit 2
 fi
 
@@ -34,12 +34,14 @@ DNS6=2606:4700:4700::1111
 #IP=$(${CURL} $URL | grep "var wan_ip" | grep -Eo '([0-9]{1,3}\.){3}[0-9]{1,3}')
 IP4=$(${CURL} -4 $URL)
 IP6=$(${CURL} -6 $URL)
+echo "ipv4: ${IP4} - ipv6: ${IP6}"
 
 # FIND CURRENTLY REGISTERED IP
 # REMOTEIP=`dig +short $DYNHOST @$DNS`
 # REMOTEIP=`drill $DYNHOST @$DNS | grep "^$DYNHOST" | cut -f 5`
 REMOTEIP4=`dig A +short $DYNHOST @$DNS4`
 REMOTEIP6=`dig AAAA +short $DYNHOST @$DNS6`
+echo "remote ipv4: ${REMOTEIP4} - remote ipv6: ${REMOTEIP6}"
 
 ## check and ipdate ipv4
 if [ "$REMOTEIP4" == "$IP4" -o "$REMOTEIP4" == "" ]

@@ -1,7 +1,7 @@
 DynDNS via AWS route 53
 ====
 
-switching to containerized solution using [tasker](https://github.com/opsxcq/tasker)
+maybe switching to containerized solution using [tasker](https://github.com/opsxcq/tasker)
 
 
 Based on: https://github.com/th0mi/ddns/blob/master/updateAws.sh - THX!
@@ -15,6 +15,7 @@ This script requires a fully configured installation [AWS cli](http://aws.amazon
 * `curl`
 * `drill` (`ldnsutils`)
 * `dig` (`dnsutils`)
+* `A` and/or `AAAA` records of (sub-)domain to be used
 
 #### aws-cli:
 ```
